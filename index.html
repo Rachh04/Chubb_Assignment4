@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Ecommerce-Product-Page</title>
+    <title>Tailwind CSS Example</title> 
+    <link href= "https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="px-64">
+    <header class="flex items-center justify-between pb-12 p-4  bg-white border-b">
+
+        <div class="flex items-center space-x-4">
+            <span  class="text-2xl font-bold text-gray-800 pr-12" >sneakers</span>
+            
+            <nav class="space-x-8 text-gray-600">
+                <a href="#" class="hover:text-black">Collections</a>
+                <a href="#" class="hover:text-black">Men</a>
+                <a href="#" class="hover:text-black">Women</a>
+                <a href="#" class="hover:text-black">About</a>
+                <a href="#" class="hover:text-black">Contact</a>
+            </nav>
+        </div>
+
+        <div class="flex items-center space-x-4">
+            <a href="#" id="cartIcon" class="hover:text-black relative" onclick="toggleDropdown()">
+                <img src="images/icon-cart.svg" alt="Cart Icon">
+                <!-- Badge showing the number of items in the cart -->
+                <span id="cartBadge" class="absolute -top-2 -right-2 bg-orange-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">0</span>
+            </a>
+            <div id="cartDropdown" class="cart-dropdown absolute right-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg hidden">
+                <div class="p-4">
+                    <span><p id="cartItems"  class="text-center text-gray-500">Your cart is empty</p>
+                    <button class="hidden" id = "delBtn" onclick="EmptyCart()"><img src="images/icon-delete.svg" alt=""></button>
+                </span>
+                </div>
+            </div>
+            <img src="images/image-avatar.png" alt="User Avatar" class="w-10 h-10 rounded-full">
+        </div>
+        
+    </header>
+
+    <section class="flex flex-col lg:flex-row items-center justify-between p-8 gap-12 bg-white">
+        <!-- Left side - Product Images -->
+        <div class="md:w-1/2 space-y-8">
+            <!-- Main product image -->
+            <div class=" flex mb-4">
+                <img src="images/image-product-1.jpg" alt="Main Product Image" class="w-full h-auto rounded-lg shadow-md cursor-pointer" onclick="openLightbox(0)">
+            </div>
+            
+            <div class="flex flex-wrap justify-between">
+                <img src="images/image-product-1-thumbnail.jpg" alt="Thumbnail 1" class="m-2 w-20 h-20 rounded-lg cursor-pointer"  onclick="openLightbox(0)">
+                <img src="images/image-product-2-thumbnail.jpg" alt="Thumbnail 2" class="m-2 w-20 h-20 rounded-lg cursor-pointer"  onclick="openLightbox(1)">
+                <img src="images/image-product-3-thumbnail.jpg" alt="Thumbnail 3" class="m-2 w-20 h-20 rounded-lg cursor-pointer"  onclick="openLightbox(2)">
+                <img src="images/image-product-4-thumbnail.jpg" alt="Thumbnail 4" class="m-2 w-20 h-20 rounded-lg cursor-pointer"  onclick="openLightbox(3)">
+            </div>
+        </div>
+        <!-- LIGHTBOX  -->
+        <div id="lightbox" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+            <!-- Container for buttons and image -->
+            <div class="relative flex items-center justify-center">
+                <!-- Previous button -->
+                <button onclick="changeLightboxImage(-1)" 
+                        class="bg-white rounded-full p-2 text-gray-800">
+                    <img src="images/icon-previous.svg" alt="Previous">
+                </button>
+        
+                <!-- Image in the center -->
+                <img id="lightboxImage" src="" alt="Lightbox image" class="mx-4 w-3/4 h-auto rounded-lg">
+        
+                <!-- Next button -->
+                <button onclick="changeLightboxImage(1)" 
+                        class="bg-white rounded-full p-2 text-gray-800">
+                    <img src="images/icon-next.svg" alt="Next">
+                </button>
+                <button onclick="closeLightbox()" class="mb-auto left-4 text-white text-4xl">
+                    <img src="images/icon-close.svg" alt="Close">
+                </button>
+            </div>
+        
+            <!-- Close button -->
+        </div>
+        
+        
+
+        <div class="flex flex-col justify-center align-center w-full md:w-1/2">
+            
+            <div class="mb-auto">
+
+                <p class="text-sm font-bold tracking-widest text-gray-600 uppercase mb-4">Sneaker Company</p>
+                <h1 class="text-4xl font-bold text-gray-900 mb-6">Fall Limited Edition Sneakers</h1>
+                <p class="text-gray-600 mb-6">
+                    These low-profile sneakers are your perfect casual wear companion. Featuring a durable rubber outer sole, they'll withstand everything the weather can offer.
+                </p>
+            </div>
+            <div class="flex items-center mb-4">
+                <p class="text-3xl font-bold text-gray-900 mr-4">$125.00</p>
+                <span class="text-white bg-black px-2 py-1 rounded-md font-bold">50%</span>
+            </div>
+            <p class="text-gray-600 line-through mb-6 ">$250.00</p>
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center bg-gray-100 rounded-md">
+                    <button id="decrease" class="px-4 py-3 text-lg text-orange-500 font-bold">
+                        <img src="images/icon-minus.svg" alt="">
+                    </button>
+                    <input type="text" id="count" value="0" class="w-12 text-center bg-gray-100 py-3 text-lg font-bold" readonly>
+                    <button id="increase" class="px-4 py-3 text-lg text-orange-500 font-bold">
+                        <img src="images/icon-plus.svg" alt="">
+                    </button>
+                </div>
+                <button  onclick="AddToCart() " class="flex-1 flex items-center justify-center px-8 py-3 bg-orange-600 hover:bg-orange-500 text-white font-bold rounded-lg shadow-lg">
+                   <img src="images/icon-cart.svg" alt="">
+                    Add to cart
+                </button>
+            </div>
+            <div id="cartPopup" class="hidden fixed top-20 right-20 bg-white w-64 shadow-lg rounded-lg p-4">
+                <h2 class="font-bold mb-2">Your Cart</h2>
+                <div id="cartItems" class="flex flex-col space-y-2">
+                  <!-- Dynamic cart items will be added here -->
+                </div>
+                <div id="cartEmptyMessage" class="text-gray-500 text-sm">Your cart is empty.</div>
+                <button id="checkoutBtn" class="bg-orange-500 text-white mt-4 w-full py-2 rounded-lg hover:bg-orange-600">
+                  Checkout
+                </button>
+              </div>
+        </div>
+    </section>
+    <script>
+        const images = [
+            "images/image-product-1.jpg",
+            "images/image-product-2.jpg",
+            "images/image-product-3.jpg",
+            "images/image-product-4.jpg"
+        ];
+        let currentImageIndex = 0;
+
+        function openLightbox(index) {
+            currentImageIndex = index;
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightboxImage');
+            lightboxImg.src = images[index];
+            lightbox.classList.remove('hidden');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.add('hidden');
+        }
+
+        function changeLightboxImage(direction) {
+            currentImageIndex = (currentImageIndex + direction + images.length) % images.length;
+            document.getElementById('lightboxImage').src = images[currentImageIndex];
+        }
+
+        // Close lightbox when clicking outside the image
+        document.getElementById('lightbox').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLightbox();
+            }
+        });
+
+        const countInput = document.getElementById('count');
+        const increaseButton = document.getElementById('increase');
+        const decreaseButton = document.getElementById('decrease');
+        
+
+        // Track cart data
+       
+        // Event listeners for increment and decrement buttons
+        increaseButton.addEventListener('click', () => {
+            const currentValue = parseInt(countInput.value, 10);
+            countInput.value = currentValue + 1;
+        });
+
+        decreaseButton.addEventListener('click', () => {
+            const currentValue = parseInt(countInput.value, 10);
+            if (currentValue > 0) {
+                countInput.value = currentValue - 1;
+            }
+        });
+        const deleteBtn = document.getElementById('delBtn');
+
+        const caritem = document.getElementById('cartItems');
+        const cartBadge = document.getElementById('cartBadge');
+        // Add to Cart event
+        let curritems = parseInt(cartBadge.innerHTML, 10);
+        function AddToCart(e){
+            const count = parseInt(countInput.value, 10); // Convert input value to an integer    
+            curritems += count;
+            
+            cartBadge.innerHTML = curritems;
+            countInput.value = 0;   
+            if(curritems===0){
+                caritem.innerHTML = "Your Cart is Empty";
+                deleteBtn.classList.add('hidden');
+            }else{
+                deleteBtn.classList.remove('hidden');
+                caritem.innerHTML = `Proceed to Pay: ${125*curritems}`;
+            }
+        }
+
+        function EmptyCart(){
+            curritems = 0;
+            caritem.innerHTML = "Your Cart is Empty";
+            deleteBtn.classList.add('hidden');
+        }
+
+        function toggleDropdown() {
+            var dropdown = document.getElementById("cartDropdown");
+            dropdown.classList.toggle("hidden");
+        }
+        
+
+
+
+
+    </script>
+</body>
+</html>
